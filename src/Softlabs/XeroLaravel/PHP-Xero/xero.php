@@ -115,25 +115,28 @@ class Xero {
 			$filterid = ( count($arguments) > 0 ) ? strip_tags(strval($arguments[0])) : false;
 			if($arguments[1]!=false) $modified_after = ( count($arguments) > 1 ) ? str_replace( 'X','T', date( 'Y-m-dXH:i:s', strtotime($arguments[1])) ) : false;
 			if($arguments[2]!=false) $where = ( count($arguments) > 2 ) ? $arguments[2] : false;
-			if ( is_array($where) && (count($where) > 0) ) {
-				$temp_where = '';
-				foreach ( $where as $wf => $wv ) {
-					if ( is_bool($wv) ) {
-						$wv = ( $wv ) ? "%3d%3dtrue" : "%3d%3dfalse";
-					} else if ( is_array($wv) ) {
-						if ( is_bool($wv[1]) ) {
-							$wv = ($wv[1]) ? rawurlencode($wv[0]) . "true" : rawurlencode($wv[0]) . "false" ;
+			if (isset($where))
+			{
+				if ( is_array($where) && (count($where) > 0) ) {
+					$temp_where = '';
+					foreach ( $where as $wf => $wv ) {
+						if ( is_bool($wv) ) {
+							$wv = ( $wv ) ? "%3d%3dtrue" : "%3d%3dfalse";
+						} else if ( is_array($wv) ) {
+							if ( is_bool($wv[1]) ) {
+								$wv = ($wv[1]) ? rawurlencode($wv[0]) . "true" : rawurlencode($wv[0]) . "false" ;
+							} else {
+								$wv = rawurlencode($wv[0]) . "%22{$wv[1]}%22" ;
+							}
 						} else {
-							$wv = rawurlencode($wv[0]) . "%22{$wv[1]}%22" ;
+							$wv = "%3d%3d%22$wv%22";
 						}
-					} else {
-						$wv = "%3d%3d%22$wv%22";
+						$temp_where .= "%26%26$wf$wv";
 					}
-					$temp_where .= "%26%26$wf$wv";
+					$where = strip_tags(substr($temp_where, 6));
+				} else {
+					$where = strip_tags(strval($where));
 				}
-				$where = strip_tags(substr($temp_where, 6));
-			} else {
-				$where = strip_tags(strval($where));
 			}
 			$order = ( count($arguments) > 3 ) ? strip_tags(strval($arguments[3])) : false;
 			$acceptHeader = ( !empty( $arguments[4] ) ) ? $arguments[4] : '';
