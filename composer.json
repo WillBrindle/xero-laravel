@@ -1,12 +1,16 @@
 {
-    "name": "Softlabs/xero-laravel",
-    "description": "Xero Service Provider for Laravel 4",
+    "name": "WillBrindle/xero-laravel",
+    "description": "Xero Service Provider for Laravel 4. Forked from SoftLabs/xero-laravel",
     "keywords": ["laravel","laravel 4","xero"],
     "license": "MIT",
     "authors": [
         {
             "name": "Paul Johnston",
             "email": "paul@softlabs.co.uk"
+        },
+        {
+            "name": "Will Brindle",
+            "email": "me@willbrindle.com"
         }
     ],
     "require": {
