@@ -57,12 +57,15 @@ class Xero {
 	private $signature_method;
 	private $format;
 
+	private $setup = true;
+
 	public function __construct($key = false, $secret = false, $public_cert = false, $private_key = false, $format = 'json') {
 		$this->key = $key;
 		$this->secret = $secret;
 		$this->public_cert = $public_cert;
 		$this->private_key = $private_key;
 		if ( $this->key == 'KEY' || $this->secret == 'SECRET' || !($this->key) || !($this->secret) || !($this->public_cert) || !($this->private_key) ) {
+			$this->setup = false;
 			error_log('Key values missing for Xero. Please see set up instructions ');
 			return false;
 		}
@@ -78,6 +81,9 @@ class Xero {
 	}
 
 	public function __call($name, $arguments) {
+		if (!$this->setup)
+			return false;
+		
 		$name = strtolower($name);
 		$valid_methods = array('accounts','contacts','creditnotes','currencies','invoices','organisation','payments','taxrates','trackingcategories','items','banktransactions','brandingthemes');
 		$valid_post_methods = array('banktransactions','contacts','creditnotes','expenseclaims','invoices','items','manualjournals','receipts');
