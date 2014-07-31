@@ -62,8 +62,8 @@ class Xero {
 		$this->secret = $secret;
 		$this->public_cert = $public_cert;
 		$this->private_key = $private_key;
-		if ( !($this->key) || !($this->secret) || !($this->public_cert) || !($this->private_key) ) {
-			error_log('Stuff missing ');
+		if ( $this->key == 'KEY' || $this->secret == 'SECRET' || !($this->key) || !($this->secret) || !($this->public_cert) || !($this->private_key) ) {
+			error_log('Key values missing for Xero. Please see set up instructions ');
 			return false;
 		}
 		if(!file_exists($this->public_cert))
