@@ -45,6 +45,8 @@
 
 */
 
+use Log;
+
 class Xero {
 	const ENDPOINT = 'https://api.xero.com/api.xro/2.0/';
 
@@ -66,7 +68,7 @@ class Xero {
 		$this->private_key = $private_key;
 		if ( $this->key == 'KEY' || $this->secret == 'SECRET' || !($this->key) || !($this->secret) || !($this->public_cert) || !($this->private_key) ) {
 			$this->setup = false;
-			error_log('Key values missing for Xero. Please see set up instructions ');
+			Log::warning('Key values missing for Xero. Please see set up instructions ');
 			return false;
 		}
 		if(!file_exists($this->public_cert))
