@@ -22,7 +22,7 @@ class XeroLaravelServiceProvider extends ServiceProvider {
         {
             \ClassLoader::addDirectories(array(__DIR__ . '/PHP-Xero'));
             $config = $this->app['config']['xero'];
-            return new \xero($config['key'], $config['secret'], $config['publicPath'], $config['privatePath'], $config['format']);
+            return new \xero($config['key'], $config['secret'], $config['publicPath'], $config['privatePath'], isset($config['format']) ? $config['format'] : 'json');
         });
     }
 
